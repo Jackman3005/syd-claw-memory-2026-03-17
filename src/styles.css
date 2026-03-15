@@ -184,3 +184,10 @@
   border-radius: 8px;
 }
 .security-icon { font-size: 1.3em; flex-shrink: 0; }
+
+/* Mobile: hide fixed QR overlay */
+@media (max-width: 768px) {
+  #qr-overlay {
+    display: none !important;
+  }
+}
