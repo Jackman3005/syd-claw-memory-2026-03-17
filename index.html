@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Systems — SydClaw Meetup</title>
+  <link rel="stylesheet" href="./reveal/reset.css">
+  <link rel="stylesheet" href="./reveal/reveal.css">
+  <link rel="stylesheet" href="./reveal/theme/black.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: Title -->
+      <section>
+        <h1>🧠 Memory Systems</h1>
+        <p class="subtitle">Building Long-Term Context for AI Agents</p>
+        <br>
+        <p class="dim" style="font-size:0.6em;">Jack Coy · SydClaw Meetup · March 2026</p>
+        <div style="margin-top: 1em; display: flex; flex-direction: column; align-items: center; gap: 0.3em;">
+          <img src="./qr-slides.svg" style="width: 140px; height: 140px; filter: invert(1);" alt="QR code to slides">
+          <div class="dim" style="font-size: 0.5em;">View slides · Follow along on your phone</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: The Problem -->
+      <section>
+        <h2>The Problem</h2>
+        <p class="subtitle">AI has amnesia — and it's not just an OpenClaw problem</p>
+        <br>
+        <div class="compare-grid">
+          <div class="compare-box">
+            <h4 class="red">Every session starts fresh</h4>
+            <ul>
+              <li>The model doesn't remember last week</li>
+              <li>You re-explain preferences every time</li>
+              <li>Context from old conversations is gone</li>
+              <li>The agent feels like a stranger again</li>
+            </ul>
+          </div>
+          <div class="compare-box" style="border: 1px solid rgba(88,166,255,0.3);">
+            <h4 class="blue">What we actually want</h4>
+            <ul>
+              <li>Remembers what you told it last month</li>
+              <li>Learns your preferences over time</li>
+              <li>Gets better the longer you use it</li>
+              <li>Feels like a colleague, not a temp</li>
+            </ul>
+          </div>
+        </div>
+        <p class="dim" style="font-size: 0.6em; margin-top: 1em;">
+          This problem exists everywhere — ChatGPT, Claude, coding agents, OpenClaw. The context window is finite, sessions end, and memory is lost.
+        </p>
+      </section>
+
+      <!-- SLIDE 3: What memory exists today -->
+      <section>
+        <h2>What Exists Today</h2>
+        <p class="subtitle">Current approaches and their limitations</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8em; margin-top: 1em; font-size: 0.6em; text-align: left;">
+
+          <div style="padding: 0.7em; border-radius: 10px; background: rgba(255,255,255,0.03);">
+            <div style="font-weight: bold; margin-bottom: 0.3em;">💬 ChatGPT Memory</div>
+            <div class="dim">Auto-generates summary bullets from conversations. Injected into every session.</div>
+            <div class="orange" style="margin-top: 0.3em; font-size: 0.9em;">You don't control what it saves. Opaque. Can be wrong.</div>
+          </div>
+
+          <div style="padding: 0.7em; border-radius: 10px; background: rgba(255,255,255,0.03);">
+            <div style="font-weight: bold; margin-bottom: 0.3em;">📁 Claude Projects</div>
+            <div class="dim">Upload docs + custom instructions. Loaded per-project.</div>
+            <div class="orange" style="margin-top: 0.3em; font-size: 0.9em;">Manual curation. Per-project, not per-you. Doesn't grow on its own.</div>
+          </div>
+
+          <div style="padding: 0.7em; border-radius: 10px; background: rgba(255,255,255,0.03);">
+            <div style="font-weight: bold; margin-bottom: 0.3em;">🦞 OpenClaw Default</div>
+            <div class="dim">Workspace files (SOUL.md, MEMORY.md) + vector search over notes.</div>
+            <div class="orange" style="margin-top: 0.3em; font-size: 0.9em;">Better foundation, but memory growth is mostly manual.</div>
+          </div>
+
+        </div>
+        <p style="font-size: 0.6em; margin-top: 1em;">
+          <span class="highlight">The gap:</span> None of these automatically observe, reflect, and consolidate memory over time.
+          <br><span class="dim">They're either opaque (ChatGPT), manual (Claude), or a good starting point (OpenClaw).</span>
+        </p>
+      </section>
+
+      <!-- SLIDE 4: What would ideal memory look like? -->
+      <section>
+        <h2>What Would Ideal Memory Look Like?</h2>
+        <p class="subtitle">Think about how humans actually remember things</p>
+
+        <div style="display: flex; gap: 0.8em; margin-top: 1em; font-size: 0.6em; text-align: left;">
+          <div style="flex: 1; padding: 0.7em; border-radius: 10px; background: rgba(255,255,255,0.03);">
+            <div style="font-size: 1.3em; margin-bottom: 0.2em;">👀</div>
+            <div style="font-weight: bold; margin-bottom: 0.3em;">Observe</div>
+            <div class="dim">Notice what happens throughout the day. Most of it is noise — that's fine.</div>
+          </div>
+          <div style="font-size: 1.5em; color: #8b949e; align-self: center;">→</div>
+          <div style="flex: 1; padding: 0.7em; border-radius: 10px; background: rgba(255,255,255,0.03);">
+            <div style="font-size: 1.3em; margin-bottom: 0.2em;">🔄</div>
+            <div style="font-weight: bold; margin-bottom: 0.3em;">Reflect</div>
+            <div class="dim">Spot patterns, cluster related events, surface what might be important.</div>
+          </div>
+          <div style="font-size: 1.5em; color: #8b949e; align-self: center;">→</div>
+          <div style="flex: 1; padding: 0.7em; border-radius: 10px; background: rgba(255,255,255,0.03);">
+            <div style="font-size: 1.3em; margin-bottom: 0.2em;">💤</div>
+            <div style="font-weight: bold; margin-bottom: 0.3em;">Consolidate</div>
+            <div class="dim">During "sleep," decide what actually matters. Promote to long-term memory. Forget the rest.</div>
+          </div>
+          <div style="font-size: 1.5em; color: #8b949e; align-self: center;">→</div>
+          <div style="flex: 1; padding: 0.7em; border-radius: 10px; background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.3);">
+            <div style="font-size: 1.3em; margin-bottom: 0.2em;">🧠</div>
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.3em;">Remember</div>
+            <div class="dim">Retrieved when relevant. Changes future behavior. Gets better over time.</div>
+          </div>
+        </div>
+
+        <p class="dim" style="font-size: 0.55em; margin-top: 1em;">
+          This is basically how human memory works — and it's the model we're trying to build for AI agents.
+        </p>
+      </section>
+
+      <!-- SLIDE 5: Core Principles -->
+      <section>
+        <h2>Core Principles</h2>
+        <p class="subtitle">Co-designed with a friend's AI agent (bot-to-bot collaboration)</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em; margin-top: 0.8em; font-size: 0.6em; text-align: left;">
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(248,81,73,0.06); border-left: 3px solid rgba(248,81,73,0.4);">
+            <div style="font-weight: bold;">Default to forgetting</div>
+            <div class="dim">Require justification for remembering. Miss some signal > ingest endless noise.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(88,166,255,0.06); border-left: 3px solid rgba(88,166,255,0.4);">
+            <div style="font-weight: bold;">Observations are not memory</div>
+            <div class="dim">Observations = raw sensor residue. Memory = processed understanding that changes future behavior.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(126,231,135,0.06); border-left: 3px solid rgba(126,231,135,0.4);">
+            <div style="font-weight: bold;">Cheap capture, expensive consolidation</div>
+            <div class="dim">Fast/cheap models handle observation. Strong/expensive models handle judgment and promotion.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(255,166,87,0.06); border-left: 3px solid rgba(255,166,87,0.4);">
+            <div style="font-weight: bold;">Structural pre-filter before model</div>
+            <div class="dim">Regex kills cron exhaust. No need to spend tokens on obvious noise.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(88,166,255,0.06); border-left: 3px solid rgba(88,166,255,0.4);">
+            <div style="font-weight: bold;">Contradictions are first-class records</div>
+            <div class="dim">When facts change, log the contradiction. It's belief revision, not a bug.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(126,231,135,0.06); border-left: 3px solid rgba(126,231,135,0.4);">
+            <div style="font-weight: bold;">Progressively opinionated pipeline</div>
+            <div class="dim">Observer is permissive. Reflector is interpretive. REM is judgmental. Each layer adds conviction.</div>
+          </div>
+
+        </div>
+        <p class="dim" style="font-size: 0.5em; margin-top: 0.6em;">
+          From "Hybrid Memory Design v1" — co-authored by my agent and a friend's agent on a shared Discord server.
+        </p>
+      </section>
+
+      <!-- SLIDE 6: The Architecture -->
+      <section>
+        <h2>What I Built</h2>
+        <p class="subtitle">Three-layer memory pipeline running 24/7</p>
+
+        <div style="display: flex; gap: 0.6em; margin-top: 0.8em; font-size: 0.55em; text-align: center;">
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(126,231,135,0.08); border: 1px solid rgba(126,231,135,0.25);">
+            <div style="font-size: 1.5em; margin-bottom: 0.2em;">👀</div>
+            <div class="green" style="font-weight: bold; font-size: 1.1em;">Observer</div>
+            <div class="dim" style="margin-top: 0.3em;">Every 15 minutes</div>
+            <div class="dim" style="font-size: 0.9em;">Gemini Flash (cheap)</div>
+            <div style="margin-top: 0.4em; text-align: left;">
+              Scans recent activity.<br>
+              Notes what happened.<br>
+              Events only, no conclusions.<br>
+              <span class="dim">Most gets discarded.</span>
+            </div>
+          </div>
+
+          <div style="font-size: 1.5em; color: #8b949e; align-self: center;">→</div>
+
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.25);">
+            <div style="font-size: 1.5em; margin-bottom: 0.2em;">🔄</div>
+            <div class="blue" style="font-weight: bold; font-size: 1.1em;">Reflector</div>
+            <div class="dim" style="margin-top: 0.3em;">Hourly</div>
+            <div class="dim" style="font-size: 0.9em;">Gemini Flash (cheap)</div>
+            <div style="margin-top: 0.4em; text-align: left;">
+              Clusters observations.<br>
+              Spots patterns.<br>
+              Suggests routing.<br>
+              <span class="dim">Still non-canonical.</span>
+            </div>
+          </div>
+
+          <div style="font-size: 1.5em; color: #8b949e; align-self: center;">→</div>
+
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(255,166,87,0.08); border: 1px solid rgba(255,166,87,0.25);">
+            <div style="font-size: 1.5em; margin-bottom: 0.2em;">💤</div>
+            <div class="orange" style="font-weight: bold; font-size: 1.1em;">REM Cycle</div>
+            <div class="dim" style="margin-top: 0.3em;">Nightly (2am)</div>
+            <div class="dim" style="font-size: 0.9em;">Claude Opus (expensive)</div>
+            <div style="margin-top: 0.4em; text-align: left;">
+              Reviews everything.<br>
+              Promotes to long-term memory.<br>
+              Prunes stale entries.<br>
+              <span class="dim">This is where quality matters.</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size: 0.5em; margin-top: 0.6em;">
+          <span class="dim">"This happened" →</span> <span class="green">Observer</span>
+          <span class="dim">→ "This is a pattern" →</span> <span class="blue">Reflector</span>
+          <span class="dim">→ "This matters" →</span> <span class="orange">REM</span>
+        </p>
+      </section>
+
+      <!-- SLIDE 7: Where does memory live? -->
+      <section>
+        <h2>Where Memory Lives</h2>
+        <p class="subtitle">Plain Markdown files — no database, no magic</p>
+
+        <div style="display: flex; gap: 1.5em; margin-top: 0.8em; font-size: 0.55em; align-items: start;">
+
+          <div class="tree" style="font-size: 0.95em; line-height: 1.6; margin: 0; flex-shrink: 0;">
+            <span class="dim">memory/</span><br>
+            ├── <span class="file">daily/</span> <span class="desc">raw daily logs</span><br>
+            ├── <span class="file">channels/</span> <span class="desc">per-channel context</span><br>
+            ├── <span class="file">topics/</span> <span class="desc">cross-cutting knowledge</span><br>
+            ├── <span class="file">rem-logs/</span> <span class="desc">consolidation audit trail</span><br>
+            └── <span class="file">MEMORY.md</span> <span class="desc">distilled long-term</span>
+          </div>
+
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5em;">
+            <div style="padding: 0.5em 0.6em; border-radius: 8px; background: rgba(126,231,135,0.06); border-left: 3px solid rgba(126,231,135,0.4);">
+              <div class="green" style="font-weight: bold;">Daily logs</div>
+              <div class="dim">Raw chronology. Session residue. No elegance required. Ages out.</div>
+            </div>
+            <div style="padding: 0.5em 0.6em; border-radius: 8px; background: rgba(88,166,255,0.06); border-left: 3px solid rgba(88,166,255,0.4);">
+              <div class="blue" style="font-weight: bold;">Channel context</div>
+              <div class="dim">Per-channel memory. What's normal in #home-lab vs #coding. Tiered: daily → weekly → long-term.</div>
+            </div>
+            <div style="padding: 0.5em 0.6em; border-radius: 8px; background: rgba(255,166,87,0.06); border-left: 3px solid rgba(255,166,87,0.4);">
+              <div class="orange" style="font-weight: bold;">Topic files</div>
+              <div class="dim">Cross-cutting project and subject knowledge. "What do I know about the Plex stack?"</div>
+            </div>
+            <div style="padding: 0.5em 0.6em; border-radius: 8px; background: rgba(248,81,73,0.06); border-left: 3px solid rgba(248,81,73,0.4);">
+              <div class="red" style="font-weight: bold;">MEMORY.md</div>
+              <div class="dim">Distilled canonical memory. Only things that change future behavior. Curated by the REM cycle.</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="dim" style="font-size: 0.5em; margin-top: 0.6em;">
+          Everything is Markdown. Readable, editable, git-tracked, portable. No vendor lock-in.
+        </p>
+      </section>
+
+      <!-- SLIDE 8: The Epistemic Pipeline -->
+      <section>
+        <h2>The Data Flow</h2>
+        <p class="subtitle">From raw event to lasting memory</p>
+
+        <div style="margin-top: 0.8em; font-size: 0.55em;">
+
+          <!-- Pre-filter -->
+          <div style="display: flex; align-items: center; gap: 0.8em; margin-bottom: 0.5em;">
+            <div style="width: 140px; text-align: right; font-weight: bold;">Event occurs</div>
+            <div style="font-size: 1.3em; color: #8b949e;">→</div>
+            <div style="flex: 1; padding: 0.5em; border-radius: 8px; background: rgba(248,81,73,0.06); border: 1px solid rgba(248,81,73,0.15);">
+              <span class="red" style="font-weight: bold;">Pre-filter (no model)</span>
+              <span class="dim"> — Structural kill list (regex), human involvement check, cooldown, novelty check. Most events die here.</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.8em; margin-bottom: 0.5em;">
+            <div style="width: 140px; text-align: right; font-weight: bold;">Survivors</div>
+            <div style="font-size: 1.3em; color: #8b949e;">→</div>
+            <div style="flex: 1; padding: 0.5em; border-radius: 8px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.15);">
+              <span class="green" style="font-weight: bold;">Observer</span>
+              <span class="dim"> — "What happened?" Events only, no conclusions. → inbox/observations/</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.8em; margin-bottom: 0.5em;">
+            <div style="width: 140px; text-align: right; font-weight: bold;">Patterns</div>
+            <div style="font-size: 1.3em; color: #8b949e;">→</div>
+            <div style="flex: 1; padding: 0.5em; border-radius: 8px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
+              <span class="blue" style="font-weight: bold;">Reflector</span>
+              <span class="dim"> — "What's recurring?" Cluster, dedupe, suggest routing. Still non-canonical.</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.8em; margin-bottom: 0.5em;">
+            <div style="width: 140px; text-align: right; font-weight: bold;">Judgment</div>
+            <div style="font-size: 1.3em; color: #8b949e;">→</div>
+            <div style="flex: 1; padding: 0.5em; border-radius: 8px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.15);">
+              <span class="orange" style="font-weight: bold;">REM Cycle</span>
+              <span class="dim"> — "What changes behavior?" Promote, prune, flag contradictions, audit trail.</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.8em;">
+            <div style="width: 140px; text-align: right; font-weight: bold;">Long-term</div>
+            <div style="font-size: 1.3em; color: #8b949e;">→</div>
+            <div style="flex: 1; padding: 0.5em; border-radius: 8px; background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.3);">
+              <span class="blue" style="font-weight: bold;">MEMORY.md · topics/ · channels/long-term/</span>
+              <span class="dim"> — Retrieved via vector search when relevant. Changes future behavior.</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SLIDE 9: Challenges & Lessons -->
+      <section>
+        <h2>Challenges & Lessons</h2>
+        <p class="subtitle">Things I've learned building this</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em; margin-top: 0.8em; font-size: 0.6em; text-align: left;">
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(248,81,73,0.06);">
+            <div class="red" style="font-weight: bold; margin-bottom: 0.2em;">🗑️ 95% of observations are noise</div>
+            <div class="dim">Cron logs, heartbeat acks, repeated tool calls. The pre-filter is critical — without it, you're paying tokens to process garbage.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(248,81,73,0.06);">
+            <div class="red" style="font-weight: bold; margin-bottom: 0.2em;">🤯 Memory ≠ logging</div>
+            <div class="dim">Capturing everything is easy. Deciding what matters is the hard part. The REM cycle is where the real value is — and the hardest to get right.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(126,231,135,0.06);">
+            <div class="green" style="font-weight: bold; margin-bottom: 0.2em;">✅ Plain Markdown is underrated</div>
+            <div class="dim">No database, no schema, no migrations. The agent can read and write its own memory with basic file tools. Git gives you versioning for free.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(126,231,135,0.06);">
+            <div class="green" style="font-weight: bold; margin-bottom: 0.2em;">✅ Bot-to-bot design worked surprisingly well</div>
+            <div class="dim">My agent and a friend's agent co-designed this architecture on a shared Discord server. Two different perspectives, real debate, better result.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(255,166,87,0.06);">
+            <div class="orange" style="font-weight: bold; margin-bottom: 0.2em;">⚠️ Contradictions are harder than they sound</div>
+            <div class="dim">People change preferences. Facts evolve. "I like Thai food" and "I've gone off Thai food" aren't a bug — they're belief revision. The system needs to handle that.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(255,166,87,0.06);">
+            <div class="orange" style="font-weight: bold; margin-bottom: 0.2em;">⚠️ Token costs are real</div>
+            <div class="dim">Observer + Reflector on cheap models is fine. The nightly REM cycle on Opus is where the bill lives. Worth it — but budget accordingly.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SLIDE 10: The Bigger Picture — Portable Identity -->
+      <section>
+        <h2>The Bigger Picture</h2>
+        <p class="subtitle">Your AI memory is yours — not the platform's</p>
+        <br>
+        <div style="font-size: 0.7em; max-width: 800px; margin: 0 auto; text-align: left;">
+
+          <p>OpenClaw won't be the last platform. In 5 years, we'll all be using something we haven't heard of yet.</p>
+
+          <p>But the context you build now — <span class="highlight">your preferences, your communication style, what your agent knows about you</span> — that should be <strong>portable</strong>.</p>
+
+          <div style="padding: 0.7em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.2); margin: 0.8em 0;">
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.3em;">Why Markdown matters</div>
+            <div class="dim">It's plain text. No vendor lock-in. No proprietary format. When the next platform comes along, you copy your memory files over and your new agent picks up where the old one left off.</div>
+          </div>
+
+          <p class="dim">The memory you're building today is an investment in your future AI experience — regardless of which platform you end up on.</p>
+
+        </div>
+      </section>
+
+      <!-- SLIDE 11: What's Next -->
+      <section>
+        <h2>What's Next</h2>
+        <p class="subtitle">This is exploration, not a finished product</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.7em; margin-top: 1em; font-size: 0.6em; text-align: left;">
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">🔧 Better pre-filtering</div>
+            <div class="dim">The observer noise problem is the #1 issue. Structural filters need to kill 95% of events before any model sees them.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">💻 Beyond OpenClaw</div>
+            <div class="dim">This isn't just an OpenClaw problem. Claude Code, ChatGPT, every AI tool needs better memory. Can we bring these patterns to other platforms?</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">🧪 More testing & iteration</div>
+            <div class="dim">This has been running for a few weeks. Longer-term patterns, better contradiction handling, and tuning the REM cycle are all in progress.</div>
+          </div>
+
+          <div style="padding: 0.6em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">🤝 Community approaches</div>
+            <div class="dim">Other people are solving this differently — Letta, LangMem, Mem0. No one's cracked it yet. Lots to learn from each other.</div>
+          </div>
+
+        </div>
+        <p class="dim" style="font-size: 0.55em; margin-top: 0.8em;">
+          I'm not claiming this is the solution — it's one approach, it's working for me, and I want to keep improving it.
+        </p>
+      </section>
+
+      <!-- SLIDE 12: Closing -->
+      <section>
+        <h2>The Real Point</h2>
+        <br>
+        <p style="font-size: 1em;">
+          Start building your AI's memory <span class="highlight">now</span>.
+        </p>
+        <br>
+        <p class="dim" style="font-size: 0.7em;">
+          The platform will change. The model will change.<br>
+          But the context you build — who you are, what you care about,<br>
+          how you like things done — that's <em>yours</em>.
+        </p>
+        <br>
+        <p style="font-size: 0.6em;">
+          <a href="https://github.com/openclaw/openclaw" target="_blank" class="green" style="text-decoration: none;">github.com/openclaw/openclaw</a> · 
+          <a href="https://docs.openclaw.ai" target="_blank" class="blue" style="text-decoration: none;">docs.openclaw.ai</a>
+        </p>
+      </section>
+
+      <!-- SLIDE 13: Q&A -->
+      <section>
+        <h1 class="emoji-big">🧠</h1>
+        <h2>Questions?</h2>
+        <br>
+        <p class="dim" style="font-size: 0.7em;">
+          Thanks for listening!
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Fixed QR code overlay -->
+  <div id="qr-overlay" style="position: fixed; top: 20px; right: 20px; z-index: 100; text-align: center; pointer-events: none;">
+    <img src="./qr-slides.svg" style="width: 120px; height: 120px; filter: invert(1); display: block;" alt="QR code">
+    <div style="color: #8b949e; font-size: 12px; margin-top: 4px; font-family: system-ui, sans-serif;">View Slides</div>
+  </div>
+
+  <script src="./reveal/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controlsTutorial: false,
+      progress: true,
+      center: true,
+      width: 1280,
+      height: 720,
+    });
+
+    // Hide fixed QR on title slide
+    const qr = document.getElementById('qr-overlay');
+    function toggleQR() {
+      const idx = Reveal.getIndices().h;
+      qr.style.display = (idx === 0) ? 'none' : 'block';
+    }
+    Reveal.on('slidechanged', toggleQR);
+    toggleQR();
+  </script>
+</body>
+</html>
