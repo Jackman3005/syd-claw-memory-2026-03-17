@@ -1,0 +1,186 @@
+/* SydClaw Talk — Custom Styles */
+
+:root {
+  --r-background-color: #0d1117;
+  --r-main-color: #e6edf3;
+  --r-heading-color: #58a6ff;
+  --r-link-color: #58a6ff;
+}
+
+/* Base */
+.reveal { font-size: 32px; }
+.reveal h1 { font-size: 2.2em; }
+.reveal h2 { font-size: 1.6em; color: #58a6ff; }
+.reveal h3 { font-size: 1.2em; color: #7ee787; }
+.reveal .subtitle { color: #8b949e; font-size: 0.7em; margin-top: 0.3em; }
+.reveal .emoji-big { font-size: 2em; }
+.reveal .highlight { color: #ffa657; font-weight: bold; }
+.reveal .dim { color: #8b949e; }
+.reveal .green { color: #7ee787; }
+.reveal .blue { color: #58a6ff; }
+.reveal .orange { color: #ffa657; }
+.reveal .red { color: #f85149; }
+
+/* Landscape grid */
+.landscape-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6em;
+  text-align: left;
+  font-size: 0.75em;
+  margin-top: 1em;
+}
+.landscape-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 1em;
+  padding: 0.5em 0.8em;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  align-items: center;
+}
+.landscape-row.active {
+  background: rgba(88,166,255,0.12);
+  border: 1px solid rgba(88,166,255,0.3);
+}
+.landscape-label { font-weight: bold; color: #58a6ff; }
+.landscape-tools { color: #8b949e; }
+.landscape-desc { color: #e6edf3; }
+
+/* Architecture diagram */
+.arch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+  margin-top: 1.5em;
+  font-size: 0.7em;
+}
+.arch-box {
+  padding: 1em 1.2em;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 140px;
+}
+.arch-gateway {
+  background: rgba(88,166,255,0.15);
+  border: 2px solid #58a6ff;
+  padding: 1.2em 1.5em;
+  min-width: 200px;
+}
+.arch-channels {
+  background: rgba(126,231,135,0.1);
+  border: 1px solid rgba(126,231,135,0.3);
+}
+.arch-tools {
+  background: rgba(255,166,87,0.1);
+  border: 1px solid rgba(255,166,87,0.3);
+}
+.arch-arrow { font-size: 1.5em; color: #8b949e; }
+
+/* Workspace file tree */
+.tree {
+  text-align: left;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.65em;
+  background: rgba(255,255,255,0.04);
+  padding: 1em 1.5em;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 0.8em;
+  line-height: 1.8;
+}
+.tree .file { color: #7ee787; }
+.tree .desc { color: #8b949e; font-family: system-ui; font-style: italic; }
+
+/* Side-by-side comparison */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5em;
+  margin-top: 1em;
+  font-size: 0.7em;
+  text-align: left;
+}
+.compare-box {
+  padding: 1em 1.2em;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+}
+.compare-box h4 {
+  margin: 0 0 0.5em 0;
+  font-size: 1.1em;
+}
+.compare-box ul { margin: 0; padding-left: 1.2em; }
+.compare-box li { margin-bottom: 0.4em; }
+
+/* Capability cards */
+.cap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  margin-top: 1em;
+  font-size: 0.7em;
+}
+.cap-card {
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 0.8em 1em;
+  text-align: left;
+}
+.cap-card .cap-icon { font-size: 1.4em; margin-bottom: 0.3em; }
+.cap-card .cap-title { font-weight: bold; color: #58a6ff; margin-bottom: 0.2em; }
+.cap-card .cap-desc { color: #8b949e; font-size: 0.9em; }
+
+/* Getting started steps */
+.steps {
+  text-align: left;
+  font-size: 0.75em;
+  margin-top: 1em;
+}
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8em;
+  margin-bottom: 1em;
+}
+.step-num {
+  background: #58a6ff;
+  color: #0d1117;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.step-content { flex: 1; }
+.step-content code {
+  background: rgba(255,255,255,0.08);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* QR code — handled by fixed-position div outside slides, see index.html */
+
+/* Security grid */
+.security-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8em;
+  margin-top: 1em;
+  font-size: 0.7em;
+  text-align: left;
+}
+.security-item {
+  display: flex;
+  gap: 0.6em;
+  align-items: flex-start;
+  padding: 0.7em;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+}
+.security-icon { font-size: 1.3em; flex-shrink: 0; }
