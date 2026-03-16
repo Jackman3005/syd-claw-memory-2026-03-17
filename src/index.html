@@ -55,7 +55,138 @@
         </p>
       </section>
 
-      <!-- SLIDE 3: What memory exists today -->
+      <!-- SLIDE 3: What's actually in the context? -->
+      <section>
+        <h2>What's Actually In The Context?</h2>
+        <p class="subtitle">Before you type your first message, here's what the model already sees</p>
+
+        <div style="display: flex; gap: 0.7em; margin-top: 0.8em; font-size: 0.5em; text-align: left;">
+
+          <!-- ChatGPT -->
+          <div style="flex: 1; border-radius: 12px; background: rgba(255,255,255,0.03); overflow: hidden;">
+            <div style="background: rgba(255,255,255,0.05); padding: 0.4em 0.6em; font-weight: bold; text-align: center;">💬 ChatGPT</div>
+            <div style="padding: 0.6em;">
+              <div style="padding: 0.3em 0.5em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="dim">System prompt</span> <span class="orange" style="font-size: 0.85em;">(OpenAI's, hidden)</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="dim">Memory bullets</span> <span class="orange" style="font-size: 0.85em;">(auto-generated)</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
+                <span class="dim">Your message →</span>
+              </div>
+              <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">You don't control the system prompt or what gets remembered.</div>
+            </div>
+          </div>
+
+          <!-- Claude Code -->
+          <div style="flex: 1; border-radius: 12px; background: rgba(255,255,255,0.03); overflow: hidden;">
+            <div style="background: rgba(255,255,255,0.05); padding: 0.4em 0.6em; font-weight: bold; text-align: center;">💻 Claude Code</div>
+            <div style="padding: 0.6em;">
+              <div style="padding: 0.3em 0.5em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="dim">System prompt</span> <span class="orange" style="font-size: 0.85em;">(Anthropic's)</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(88,166,255,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="dim">CLAUDE.md</span> <span class="blue" style="font-size: 0.85em;">(you write this)</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(255,255,255,0.03); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="dim">Repo file tree</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
+                <span class="dim">Your message →</span>
+              </div>
+              <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">You control CLAUDE.md. Scoped to one repo.</div>
+            </div>
+          </div>
+
+          <!-- OpenClaw -->
+          <div style="flex: 1; border-radius: 12px; background: rgba(88,166,255,0.05); border: 1px solid rgba(88,166,255,0.2); overflow: hidden;">
+            <div style="background: rgba(88,166,255,0.1); padding: 0.4em 0.6em; font-weight: bold; text-align: center;">🦞 OpenClaw</div>
+            <div style="padding: 0.6em;">
+              <div style="padding: 0.3em 0.5em; background: rgba(88,166,255,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="dim">System prompt</span> <span class="blue" style="font-size: 0.85em;">(OpenClaw's + yours)</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="green">SOUL.md</span> <span class="dim" style="font-size: 0.85em;">personality</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="green">AGENTS.md</span> <span class="dim" style="font-size: 0.85em;">instructions</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="green">USER.md</span> <span class="dim" style="font-size: 0.85em;">who you are</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="green">MEMORY.md</span> <span class="dim" style="font-size: 0.85em;">long-term memory</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+                <span class="green">TOOLS.md + IDENTITY.md</span>
+              </div>
+              <div style="padding: 0.3em 0.5em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
+                <span class="dim">Your message →</span>
+              </div>
+              <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">You write all of these. Loaded every session.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="dim" style="font-size: 0.48em; margin-top: 0.6em;">
+          Same model underneath. The starting context is what makes the experience different.
+        </p>
+      </section>
+
+      <!-- SLIDE 4: What happens as you chat -->
+      <section>
+        <h2>What Happens As You Chat</h2>
+        <p class="subtitle">Context grows with every message — then what?</p>
+
+        <div style="display: flex; gap: 0.8em; margin-top: 0.8em; font-size: 0.5em; text-align: left; align-items: start;">
+
+          <!-- Left: the growing session -->
+          <div style="flex: 1;">
+            <div style="border-radius: 12px; background: rgba(255,255,255,0.03); padding: 0.7em;">
+              <div style="font-weight: bold; margin-bottom: 0.4em;">📨 Every message replays everything</div>
+              <div style="display: flex; flex-direction: column; gap: 0.2em;">
+                <div style="padding: 0.2em 0.4em; background: rgba(255,255,255,0.04); border-radius: 4px; opacity: 0.4; font-size: 0.9em;">System prompt + workspace files</div>
+                <div style="padding: 0.2em 0.4em; background: rgba(88,166,255,0.1); border-radius: 4px; opacity: 0.5; font-size: 0.9em;">Message 1 + Response 1</div>
+                <div style="padding: 0.2em 0.4em; background: rgba(88,166,255,0.1); border-radius: 4px; opacity: 0.6; font-size: 0.9em;">Message 2 + Response 2</div>
+                <div style="padding: 0.2em 0.4em; background: rgba(88,166,255,0.1); border-radius: 4px; opacity: 0.7; font-size: 0.9em;">Message 3 + Response 3</div>
+                <div style="padding: 0.2em 0.4em; background: rgba(88,166,255,0.1); border-radius: 4px; opacity: 0.8; font-size: 0.9em;">...</div>
+                <div style="padding: 0.2em 0.4em; background: rgba(88,166,255,0.15); border-radius: 4px; font-size: 0.9em;">Message N + Response N</div>
+                <div style="padding: 0.2em 0.4em; background: rgba(126,231,135,0.1); border-radius: 4px; border: 1px dashed rgba(126,231,135,0.3); font-size: 0.9em;">Your new message →</div>
+              </div>
+              <div class="dim" style="margin-top: 0.4em; font-size: 0.9em;">This is the same everywhere — ChatGPT, Claude, OpenClaw. The full conversation is sent every time.</div>
+            </div>
+          </div>
+
+          <!-- Right: what happens when it's full -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5em;">
+            <div style="font-weight: bold; margin-bottom: 0.2em;">When the context window fills up:</div>
+
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(248,81,73,0.06); border: 1px solid rgba(248,81,73,0.15);">
+              <div class="red" style="font-weight: bold;">🗑️ Default: Truncate</div>
+              <div class="dim">Oldest messages get dropped. Context gone forever. This is what most tools do, including OpenClaw by default.</div>
+            </div>
+
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
+              <div class="blue" style="font-weight: bold;">📝 OpenClaw: Compaction</div>
+              <div class="dim">Summarizes older messages before dropping them. Better — but the summary is lossy. Details are gone.</div>
+            </div>
+
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.15);">
+              <div class="green" style="font-weight: bold;">🌳 LCM: Lossless summarization</div>
+              <div class="dim">Summarizes into a DAG — but keeps every original message in a database. Agent can drill back into any summary to recover full detail. Nothing is ever lost.</div>
+            </div>
+
+            <div class="dim" style="font-size: 0.85em; margin-top: 0.3em;">
+              ⚠️ All of these are <strong>within one session</strong>. Start a new session and you're back to zero — unless you have cross-session memory.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SLIDE 5: What memory exists today -->
       <section>
         <h2>What Exists Today</h2>
         <p class="subtitle">Current approaches and their limitations</p>
@@ -219,7 +350,54 @@
         </p>
       </section>
 
-      <!-- SLIDE 7: Where does memory live? -->
+      <!-- SLIDE: How memories are surfaced -->
+      <section>
+        <h2>How Memories Get Into Context</h2>
+        <p class="subtitle">Two mechanisms — automatic injection and on-demand retrieval</p>
+
+        <div style="display: flex; gap: 1em; margin-top: 0.8em; font-size: 0.52em; text-align: left; align-items: start;">
+
+          <!-- Left: auto-injected -->
+          <div style="flex: 1;">
+            <div style="border-radius: 12px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.2); padding: 0.7em;">
+              <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">📂 Loaded automatically every session</div>
+              <div class="dim" style="margin-bottom: 0.3em;">Injected into the system prompt before your first message:</div>
+              <div style="display: flex; flex-direction: column; gap: 0.2em;">
+                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">SOUL.md — personality</div>
+                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">AGENTS.md — instructions</div>
+                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">USER.md — who you are</div>
+                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">MEMORY.md — long-term memory</div>
+                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">TOOLS.md, IDENTITY.md, HEARTBEAT.md</div>
+              </div>
+              <div class="dim" style="margin-top: 0.4em; font-size: 0.9em;">Always present. Costs tokens every turn. Keep these concise.</div>
+            </div>
+          </div>
+
+          <!-- Right: on-demand -->
+          <div style="flex: 1;">
+            <div style="border-radius: 12px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.2); padding: 0.7em;">
+              <div class="blue" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">🔍 Retrieved on demand (tool calls)</div>
+              <div class="dim" style="margin-bottom: 0.3em;">The model decides to search when it thinks it needs more context:</div>
+              <div style="display: flex; flex-direction: column; gap: 0.2em;">
+                <div style="padding: 0.25em 0.4em; background: rgba(88,166,255,0.08); border-radius: 4px;"><code>memory_search</code> — semantic vector search over all memory files</div>
+                <div style="padding: 0.25em 0.4em; background: rgba(88,166,255,0.08); border-radius: 4px;"><code>memory_get</code> — read specific file/line range</div>
+              </div>
+              <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">
+                The system prompt tells the model:<br>
+                <span style="font-style: italic; color: #8b949e;">"Before answering questions about prior work, decisions, dates, people, preferences, or todos — run memory_search first."</span>
+              </div>
+              <div class="dim" style="margin-top: 0.4em; font-size: 0.9em;">Only loaded when needed. Doesn't cost tokens until the model calls it.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <p style="font-size: 0.48em; margin-top: 0.5em;">
+          <span class="highlight">Key insight:</span> <span class="dim">daily logs, topic files, and channel context are never auto-loaded — they're pulled in via semantic search when relevant. This keeps baseline token cost low while still having deep recall available.</span>
+        </p>
+      </section>
+
+      <!-- SLIDE: Where does memory live? -->
       <section>
         <h2>Where Memory Lives</h2>
         <p class="subtitle">Plain Markdown files — no database, no magic</p>
