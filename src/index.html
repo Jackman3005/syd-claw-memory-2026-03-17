@@ -470,6 +470,17 @@
     }
     Reveal.on('slidechanged', toggleQR);
     toggleQR();
+
+    // Disable touch swipe in landscape on mobile (so users can zoom/pan)
+    // Keep swipe enabled in portrait
+    function updateTouch() {
+      const isLandscape = window.innerWidth > window.innerHeight;
+      const isMobile = window.innerWidth < 1024;
+      Reveal.configure({ touch: !(isLandscape && isMobile) });
+    }
+    window.addEventListener('resize', updateTouch);
+    window.addEventListener('orientationchange', () => setTimeout(updateTouch, 200));
+    updateTouch();
   </script>
 </body>
 </html>
