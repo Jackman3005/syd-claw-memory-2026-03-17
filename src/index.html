@@ -347,42 +347,51 @@
             </div>
           </div>
 
-          <!-- Step 2: Embedding + search -->
-          <div class="fragment" data-fragment-index="2" style="display: flex; align-items: center; gap: 0.5em; margin-bottom: 0.6em;">
-            <div style="padding: 0.5em 0.8em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15); flex: 0.8; text-align: center;">
-              <div>🔢 Query → <strong>embedding</strong></div>
-              <div class="dim" style="font-size: 0.85em;">your words become a vector<br>that captures meaning</div>
+          <!-- Step 2: Embedding + search results with snippets -->
+          <div class="fragment" data-fragment-index="2" style="margin-bottom: 0.6em;">
+            <div style="display: flex; align-items: center; gap: 0.5em; margin-bottom: 0.4em;">
+              <div style="padding: 0.5em 0.8em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15); text-align: center;">
+                <div>🔢 Query → <strong>embedding</strong></div>
+                <div class="dim" style="font-size: 0.85em;">your words become a vector that captures meaning</div>
+              </div>
+              <div style="font-size: 1.5em; color: #58a6ff;">→</div>
+              <div style="font-size: 1.1em;">🔍 Semantic search across all memory files</div>
             </div>
-            <div style="font-size: 1.5em; color: #58a6ff;">→</div>
-            <div style="padding: 0.5em 0.6em; border-radius: 10px; background: rgba(126,231,135,0.08); border: 1px solid rgba(126,231,135,0.2); flex: 0.6; text-align: center;">
-              <div class="green" style="font-weight: bold;">95%</div>
-              <div class="dim" style="font-size: 0.85em;">people.md:14<br>"Aom — birthday Mar 3"</div>
+            <div style="display: flex; gap: 0.4em;">
+              <div style="flex: 1; padding: 0.4em; border-radius: 8px; background: rgba(126,231,135,0.1); border: 1px solid rgba(126,231,135,0.3);">
+                <div class="green" style="font-weight: bold;">95% match</div>
+                <div class="dim" style="font-size: 0.85em;">📄 people.md · line 14</div>
+                <div style="font-size: 0.85em; margin-top: 0.2em; padding: 0.2em 0.4em; background: rgba(255,255,255,0.03); border-radius: 4px; font-family: monospace; color: #8b949e;">"Aom (Varunya) — birthday March 3, Thai New Year is important too"</div>
+              </div>
+              <div style="flex: 1; padding: 0.4em; border-radius: 8px; background: rgba(126,231,135,0.05); border: 1px solid rgba(126,231,135,0.15);">
+                <div style="color: #7ee787; font-weight: bold;">78% match</div>
+                <div class="dim" style="font-size: 0.85em;">📄 daily/2026-02-20.md · line 5</div>
+                <div style="font-size: 0.85em; margin-top: 0.2em; padding: 0.2em 0.4em; background: rgba(255,255,255,0.03); border-radius: 4px; font-family: monospace; color: #8b949e;">"Gender reveal party for Jack & Aom's baby..."</div>
+              </div>
+              <div style="flex: 0.7; padding: 0.4em; border-radius: 8px; background: rgba(255,255,255,0.02);">
+                <div class="dim" style="font-weight: bold;">34% match</div>
+                <div class="dim" style="font-size: 0.85em;">📄 topics/plex.md</div>
+                <div class="dim" style="font-size: 0.8em; margin-top: 0.2em;">not relevant — filtered out</div>
+              </div>
             </div>
-            <div style="padding: 0.5em 0.6em; border-radius: 10px; background: rgba(126,231,135,0.05); border: 1px solid rgba(126,231,135,0.1); flex: 0.6; text-align: center;">
-              <div style="color: #7ee787; font-weight: bold;">78%</div>
-              <div class="dim" style="font-size: 0.85em;">daily/2026-02-20.md<br>"Gender reveal party..."</div>
-            </div>
-            <div style="padding: 0.5em 0.6em; border-radius: 10px; background: rgba(255,255,255,0.02); flex: 0.6; text-align: center;">
-              <div class="dim" style="font-weight: bold;">34%</div>
-              <div class="dim" style="font-size: 0.85em;">topics/plex.md<br>"Media server..."</div>
-            </div>
+            <div class="dim" style="margin-top: 0.3em; font-size: 0.9em;">↑ These snippets, file paths, and line numbers are all <strong>returned as tool results</strong> — now in the context.</div>
           </div>
 
-          <!-- Step 3: Dig deeper + loaded -->
+          <!-- Step 3: Optional deeper read -->
           <div class="fragment" data-fragment-index="3" style="display: flex; align-items: center; gap: 0.5em; margin-bottom: 0.4em;">
-            <div style="padding: 0.5em 0.8em; border-radius: 10px; background: rgba(255,166,87,0.1); border: 1px solid rgba(255,166,87,0.25); flex: 1; text-align: center;">
-              <div style="font-size: 1.1em;">🧠 Wants more detail — second tool call</div>
-              <div style="font-family: 'SF Mono', monospace; margin-top: 0.2em; color: #7ee787; font-size: 0.95em;">memory_get("people.md", lines 10-20)</div>
+            <div style="padding: 0.5em 0.8em; border-radius: 10px; background: rgba(255,166,87,0.06); border: 1px dashed rgba(255,166,87,0.2); flex: 1; text-align: center;">
+              <div style="font-size: 1.1em;">📖 <em>Optionally</em>, the model can read more</div>
+              <div class="dim" style="font-size: 0.9em;">If the snippet isn't enough, it can just read the full file — a normal file read, nothing special.</div>
             </div>
             <div style="font-size: 1.5em; color: #58a6ff;">→</div>
-            <div style="padding: 0.5em 0.8em; border-radius: 10px; background: rgba(126,231,135,0.12); border: 2px solid rgba(126,231,135,0.4); flex: 0.8; text-align: center;">
-              <div style="font-size: 1.1em;">✅ Memory loaded into context</div>
-              <div class="dim" style="font-size: 0.85em;">full detail available for response</div>
+            <div style="padding: 0.5em 0.8em; border-radius: 10px; background: rgba(126,231,135,0.12); border: 2px solid rgba(126,231,135,0.4); flex: 0.7; text-align: center;">
+              <div style="font-size: 1.1em;">✅ Memories in context</div>
+              <div class="dim" style="font-size: 0.85em;">ready for the response</div>
             </div>
           </div>
 
           <!-- Punchline -->
-          <div class="fragment" data-fragment-index="4" style="text-align: center; margin-top: 0.4em;">
+          <div class="fragment" data-fragment-index="4" style="text-align: center; margin-top: 0.3em;">
             <div class="dim" style="font-size: 0.95em;">Finds by <em>meaning</em>, not keywords — "Aom birthday" matches "Varunya born on March 3"</div>
           </div>
 
