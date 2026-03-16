@@ -485,10 +485,61 @@
       </section>
 
 
-      <!-- SLIDE 7: The Architecture -->
+      <!-- SLIDE: Inspiration — How Human Memory Works -->
+      <section>
+        <h2>Inspiration: The Human Brain</h2>
+        <p class="subtitle">What if we built memory the way brains actually work?</p>
+
+        <div style="display: flex; gap: 0.6em; margin-top: 0.8em; font-size: 0.52em; text-align: center;">
+
+          <!-- Encoding -->
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.2);">
+            <div style="font-size: 1.5em; margin-bottom: 0.2em;">🌞</div>
+            <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.3em;">During the day</div>
+            <div style="text-align: left;">
+              <div style="margin-bottom: 0.3em;">You don't <em>try</em> to remember — it just happens. Memories are <strong>passive</strong>.</div>
+              <div style="margin-bottom: 0.3em;" class="dim">Your hippocampus quietly encodes experiences in the background.</div>
+              <div><span class="highlight">Emotional weight matters</span> <span class="dim">— your boss saying "never do that again" sticks. A casual joke doesn't.</span></div>
+            </div>
+          </div>
+
+          <div style="font-size: 1.5em; color: #8b949e; align-self: center;">→</div>
+
+          <!-- Consolidation -->
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.2);">
+            <div style="font-size: 1.5em; margin-bottom: 0.2em;">🌙</div>
+            <div class="blue" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.3em;">During sleep</div>
+            <div style="text-align: left;">
+              <div style="margin-bottom: 0.3em;">Your brain <strong>replays</strong> the day's events, compressed and reorganized.</div>
+              <div style="margin-bottom: 0.3em;" class="dim">Important memories move from temporary (hippocampus) to long-term (neocortex).</div>
+              <div class="dim">Memories <strong>transform</strong> — "dinner at that Thai place Tuesday" becomes "I enjoy Thai food with Aom."</div>
+            </div>
+          </div>
+
+          <div style="font-size: 1.5em; color: #8b949e; align-self: center;">→</div>
+
+          <!-- Retrieval -->
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.2);">
+            <div style="font-size: 1.5em; margin-bottom: 0.2em;">💡</div>
+            <div class="orange" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.3em;">When you need it</div>
+            <div style="text-align: left;">
+              <div style="margin-bottom: 0.3em;">One memory <strong>triggers related ones</strong> — a smell recalls a place, a person, a feeling.</div>
+              <div style="margin-bottom: 0.3em;" class="dim">Frequently accessed and emotionally charged memories are stronger.</div>
+              <div class="dim">Unused memories fade — but might still be there, waiting for the right trigger.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="dim" style="font-size: 0.48em; margin-top: 0.5em;">
+          The key insight: memory is <strong>passive capture</strong>, <strong>offline consolidation</strong>, and <strong>associative retrieval</strong>. Can we build something similar?
+        </p>
+      </section>
+
+      <!-- SLIDE: The Architecture -->
       <section>
         <h2>What I Built</h2>
-        <p class="subtitle">Three-layer memory pipeline running 24/7</p>
+        <p class="subtitle">Inspired by Total Recall + human sleep consolidation — passive, not active</p>
 
         <div style="display: flex; gap: 0.6em; margin-top: 0.8em; font-size: 0.55em; text-align: center;">
           <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(126,231,135,0.08); border: 1px solid rgba(126,231,135,0.25);">
@@ -536,9 +587,8 @@
         </div>
 
         <p style="font-size: 0.5em; margin-top: 0.6em;">
-          <span class="dim">"This happened" →</span> <span class="green">Observer</span>
-          <span class="dim">→ "This is a pattern" →</span> <span class="blue">Reflector</span>
-          <span class="dim">→ "This matters" →</span> <span class="orange">REM</span>
+          <span class="dim">The agent doesn't have to remember anything — the system observes what's happening <em>outside</em> the session and processes it passively.</span><br>
+          <span class="dim" style="font-size: 0.85em;">Heavily inspired by <a href="https://github.com/gavdalf/total-recall" target="_blank" style="color: #58a6ff; text-decoration: none;">Total Recall</a> (observational memory for OpenClaw) + a custom nightly REM cycle. Still a work in progress.</span>
         </p>
       </section>
 
@@ -581,6 +631,59 @@
 
         <p class="dim" style="font-size: 0.5em; margin-top: 0.6em;">
           Everything is Markdown. Readable, editable, git-tracked, portable. No vendor lock-in.
+        </p>
+      </section>
+
+      <!-- SLIDE: What's Still Missing — Brain vs What We Have -->
+      <section>
+        <h2>What's Still Missing</h2>
+        <p class="subtitle">Taking more inspiration from how the brain actually works</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5em; margin-top: 0.7em; font-size: 0.52em; text-align: left;">
+
+          <!-- Capture column -->
+          <div>
+            <div class="green" style="font-weight: bold; text-align: center; margin-bottom: 0.4em;">✅ Capture</div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.15); margin-bottom: 0.4em;">
+              <div style="font-weight: bold; margin-bottom: 0.2em;">Passive observation ✅</div>
+              <div class="dim">Like the brain — we don't rely on the agent actively remembering. The observer watches outside the session.</div>
+            </div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(248,81,73,0.06); border: 1px solid rgba(248,81,73,0.15);">
+              <div style="font-weight: bold; margin-bottom: 0.2em;">No importance weighting ❌</div>
+              <div class="dim">The brain tags emotional events as more important. A stern correction and a casual joke get stored the same way in our system.</div>
+            </div>
+          </div>
+
+          <!-- Storage column -->
+          <div>
+            <div class="orange" style="font-weight: bold; text-align: center; margin-bottom: 0.4em;">⚠️ Storage</div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.15); margin-bottom: 0.4em;">
+              <div style="font-weight: bold; margin-bottom: 0.2em;">Flat files, not a graph ❌</div>
+              <div class="dim">The brain stores memories as networks — nodes with many connections. We use folders and files. A dinner memory should link to the person, place, food, date, and conversation topic.</div>
+            </div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.15);">
+              <div style="font-weight: bold; margin-bottom: 0.2em;">No temporal decay ❌</div>
+              <div class="dim">Human memories fade unless refreshed. A 6-month-old preference is just as accessible as yesterday's correction in our system.</div>
+            </div>
+          </div>
+
+          <!-- Retrieval column -->
+          <div>
+            <div class="red" style="font-weight: bold; text-align: center; margin-bottom: 0.4em;">❌ Retrieval</div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(248,81,73,0.06); border: 1px solid rgba(248,81,73,0.15); margin-bottom: 0.4em;">
+              <div style="font-weight: bold; margin-bottom: 0.2em;">No associative chains ❌</div>
+              <div class="dim">Human memory triggers related memories in a chain — a smell recalls a place, a person, a feeling. We just do similarity search on one query.</div>
+            </div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(248,81,73,0.06); border: 1px solid rgba(248,81,73,0.15);">
+              <div style="font-weight: bold; margin-bottom: 0.2em;">No strengthening on access ❌</div>
+              <div class="dim">In the brain, recalling a memory makes it stronger. In our system, retrieving a memory doesn't change its weight or priority at all.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="dim" style="font-size: 0.48em; margin-top: 0.5em; text-align: center;">
+          We've made progress on capture. Storage and retrieval are wide open for improvement. This is where the interesting work is.
         </p>
       </section>
 
