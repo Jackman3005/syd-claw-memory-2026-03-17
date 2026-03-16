@@ -328,49 +328,100 @@
         </p>
       </section>
 
-      <!-- SLIDE 8: How memory_search works -->
+      <!-- SLIDE 8: How memory_search works — visual flow -->
       <section>
-        <h2>Under The Hood: Semantic Search</h2>
-        <p class="subtitle">How memory_search actually finds relevant memories</p>
+        <h2>How Memory Search Works</h2>
+        <p class="subtitle">A tool call that finds relevant memories by meaning, not keywords</p>
 
-        <div style="display: flex; gap: 0.8em; margin-top: 0.8em; font-size: 0.52em; text-align: left;">
+        <div style="margin-top: 0.5em; font-size: 0.48em;">
 
-          <!-- Left: how it works -->
-          <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5em;">
-            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06);">
-              <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">1. Embedding</div>
-              <div class="dim">Every chunk of your memory files gets converted into a vector (a list of numbers) that captures its meaning. Your query does too.</div>
+          <!-- Row 1: The trigger -->
+          <div style="display: flex; align-items: center; gap: 0.6em; margin-bottom: 0.4em;">
+            <div style="padding: 0.4em 0.6em; border-radius: 8px; background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.25); min-width: 200px; text-align: center;">
+              <div>💬 You ask: <em>"When's Aom's birthday?"</em></div>
             </div>
-            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06);">
-              <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">2. Similarity search</div>
-              <div class="dim">Find the memory chunks whose vectors are closest to your query's vector. "Closest" = most semantically similar, even with different wording.</div>
+            <div class="dim">→</div>
+            <div style="padding: 0.4em 0.6em; border-radius: 8px; background: rgba(255,166,87,0.08); border: 1px solid rgba(255,166,87,0.2); text-align: center;">
+              <div>🧠 Model decides it needs memory</div>
+              <div class="dim" style="font-size: 0.85em;">→ calls <code>memory_search("Aom birthday")</code></div>
             </div>
-            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06);">
-              <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">3. Inject into context</div>
-              <div class="dim">The top results get pulled into the conversation as tool output. The model now has that memory available for this response.</div>
+            <div class="dim">→</div>
+            <div style="padding: 0.4em 0.6em; border-radius: 8px; background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.2); text-align: center;">
+              <div>🔢 Query gets <strong>embedded</strong></div>
+              <div class="dim" style="font-size: 0.85em;">converted to a vector of numbers<br>that captures its meaning</div>
             </div>
           </div>
 
-          <!-- Right: defaults + caveats -->
-          <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5em;">
-            <div style="padding: 0.5em; border-radius: 10px; background: rgba(126,231,135,0.06);">
-              <div class="green" style="font-weight: bold; margin-bottom: 0.2em;">OpenClaw defaults</div>
-              <div class="dim">
-                • Enabled by default (if you have an API key for embeddings)<br>
-                • Auto-selects provider: OpenAI → Gemini → Voyage → Mistral → local<br>
-                • Watches memory files — re-indexes on change<br>
-                • Also supports local/offline embeddings
+          <!-- Row 2: Search -->
+          <div style="display: flex; align-items: start; gap: 0.6em; margin-bottom: 0.4em;">
+            <div style="flex: 1; padding: 0.5em; border-radius: 8px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
+              <div class="blue" style="font-weight: bold; margin-bottom: 0.3em;">🔍 Semantic search across all memory files</div>
+              <div style="display: flex; gap: 0.4em;">
+                <div style="flex: 1; padding: 0.3em; border-radius: 6px; background: rgba(126,231,135,0.12); border: 1px solid rgba(126,231,135,0.3);">
+                  <div class="green" style="font-weight: bold; font-size: 0.9em;">95% match</div>
+                  <div class="dim" style="font-size: 0.9em;">people.md:14<br>"Aom — birthday March 3,<br>Thai New Year important too"</div>
+                </div>
+                <div style="flex: 1; padding: 0.3em; border-radius: 6px; background: rgba(126,231,135,0.08); border: 1px solid rgba(126,231,135,0.15);">
+                  <div class="green" style="font-weight: bold; font-size: 0.9em;">78% match</div>
+                  <div class="dim" style="font-size: 0.9em;">daily/2026-02-20.md:5<br>"Gender reveal party for<br>Jack & Aom's baby..."</div>
+                </div>
+                <div style="flex: 1; padding: 0.3em; border-radius: 6px; background: rgba(255,255,255,0.03);">
+                  <div class="dim" style="font-weight: bold; font-size: 0.9em;">34% match</div>
+                  <div class="dim" style="font-size: 0.9em;">topics/plex-stack.md:8<br>"Media server stack..."</div>
+                </div>
               </div>
+              <div class="dim" style="margin-top: 0.3em; font-size: 0.9em;">Finds relevant content by <em>meaning</em> — "Aom birthday" matches even if the file says "Varunya born on March 3"</div>
             </div>
-            <div style="padding: 0.5em; border-radius: 10px; background: rgba(255,166,87,0.06);">
-              <div class="orange" style="font-weight: bold; margin-bottom: 0.2em;">The limitations</div>
-              <div class="dim">
-                • Only finds what's been written to memory files<br>
-                • Quality depends on how memory is organized<br>
-                • Embedding quality varies by provider<br>
-                • It's a tool call — adds latency + tokens to each retrieval
-              </div>
+          </div>
+
+          <!-- Row 3: Results returned, optional dig deeper -->
+          <div style="display: flex; align-items: center; gap: 0.6em;">
+            <div style="padding: 0.4em 0.6em; border-radius: 8px; background: rgba(126,231,135,0.08); border: 1px solid rgba(126,231,135,0.2); text-align: center;">
+              <div>📋 Top results returned</div>
+              <div class="dim" style="font-size: 0.85em;">file path, line numbers, snippet</div>
             </div>
+            <div class="dim">→</div>
+            <div style="padding: 0.4em 0.6em; border-radius: 8px; background: rgba(255,166,87,0.08); border: 1px solid rgba(255,166,87,0.2); text-align: center;">
+              <div>🧠 Model wants more detail</div>
+              <div class="dim" style="font-size: 0.85em;">→ calls <code>memory_get("people.md", line 10-20)</code></div>
+            </div>
+            <div class="dim">→</div>
+            <div style="padding: 0.4em 0.6em; border-radius: 8px; background: rgba(126,231,135,0.1); border: 1px solid rgba(126,231,135,0.3); text-align: center;">
+              <div>✅ Full context loaded</div>
+              <div class="dim" style="font-size: 0.85em;">Now in the conversation<br>as tool call results</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SLIDE 9: Semantic search — defaults & limitations -->
+      <section>
+        <h2>Semantic Search: Defaults & Limitations</h2>
+        <p class="subtitle">What OpenClaw gives you out of the box — and where it falls short</p>
+
+        <div style="display: flex; gap: 1em; margin-top: 0.8em; font-size: 0.55em; text-align: left; align-items: start;">
+
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.2);">
+            <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">✅ OpenClaw defaults</div>
+            <ul style="margin: 0; padding-left: 1.2em;">
+              <li class="dim">Enabled by default if you have an embedding API key</li>
+              <li class="dim">Auto-selects provider: OpenAI → Gemini → Voyage → Mistral → local</li>
+              <li class="dim">Watches memory files — automatically re-indexes on change</li>
+              <li class="dim">Supports fully local/offline embeddings too</li>
+              <li class="dim">Both <code>memory_search</code> and <code>memory_get</code> are tool calls — the model uses them like any other tool</li>
+            </ul>
+          </div>
+
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.15);">
+            <div class="orange" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">⚠️ The limitations</div>
+            <ul style="margin: 0; padding-left: 1.2em;">
+              <li class="dim">Can only find what's been written to memory files — if it was never stored, it can't be found</li>
+              <li class="dim">The model has to <em>decide</em> to search — it's not automatic on every message</li>
+              <li class="dim">Sometimes the model searches as a fallback, not proactively</li>
+              <li class="dim">Quality depends on how well memory is organized and chunked</li>
+              <li class="dim">Each retrieval adds latency and tokens to the turn</li>
+            </ul>
           </div>
 
         </div>
