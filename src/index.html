@@ -239,80 +239,55 @@
         <h2>Memory Is A Different Problem</h2>
         <p class="subtitle">You can't just dump everything into context — it won't fit</p>
 
-        <div style="display: flex; gap: 1.5em; margin-top: 0.6em; align-items: end; justify-content: center;">
+        <div style="display: flex; gap: 1em; margin-top: 0.6em; align-items: end; justify-content: center;">
 
-          <!-- Context window visualization -->
-          <div style="position: relative; width: 280px; height: 380px; border: 2px solid rgba(88,166,255,0.4); border-radius: 12px; overflow: hidden; font-size: 0.5em;">
-            <!-- Label -->
-            <div style="position: absolute; top: -1.8em; left: 0; right: 0; text-align: center; color: #58a6ff; font-weight: bold; font-size: 1.1em;">Context Window</div>
-
-            <!-- System prompt -->
-            <div style="background: rgba(255,166,87,0.15); padding: 0.4em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
-              <span class="dim">System prompt + tools</span>
+          <!-- Context window - bounded -->
+          <div style="width: 320px; font-size: 0.48em;">
+            <div style="text-align: center; color: #58a6ff; font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">What fits in one API call</div>
+            <div style="border: 2px solid rgba(88,166,255,0.4); border-radius: 12px; overflow: hidden; height: 340px;">
+              <div style="background: rgba(255,166,87,0.12); padding: 0.35em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                System prompt + skills + tools
+              </div>
+              <div style="background: rgba(126,231,135,0.1); padding: 0.35em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                Workspace files <span class="dim" style="font-size: 0.85em;">(each capped at 20K chars)</span>
+              </div>
+              <div style="background: rgba(88,166,255,0.08); padding: 1.5em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                Conversation history
+              </div>
+              <div style="background: rgba(255,255,255,0.02); padding: 0.8em; text-align: center;">
+                <span class="dim">↕ Room for response</span>
+              </div>
             </div>
-
-            <!-- Workspace files -->
-            <div style="background: rgba(126,231,135,0.1); padding: 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
-              <span class="dim">SOUL · AGENTS · USER · TOOLS</span>
-            </div>
-
-            <!-- MEMORY.md -->
-            <div style="background: rgba(126,231,135,0.15); padding: 0.4em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
-              <span class="dim">MEMORY.md</span>
-              <span style="font-size: 0.8em; color: #8b949e;">(max 20K chars)</span>
-            </div>
-
-            <!-- Conversation -->
-            <div style="background: rgba(88,166,255,0.08); padding: 0.8em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
-              <span class="dim">Conversation history</span>
-            </div>
-
-            <!-- Room for response -->
-            <div style="background: rgba(255,255,255,0.02); padding: 0.6em; text-align: center;">
-              <span class="dim">↕ Room for response</span>
-            </div>
+            <div style="text-align: center; margin-top: 0.3em; color: #58a6ff;">Fixed size. Finite.</div>
           </div>
 
-          <!-- Arrow -->
-          <div style="font-size: 0.55em; text-align: center; padding-bottom: 2em;">
-            <div class="dim">vs</div>
+          <!-- vs -->
+          <div style="font-size: 0.6em; text-align: center; padding-bottom: 6em; color: #8b949e;">
+            vs
           </div>
 
-          <!-- Memory that exists -->
-          <div style="position: relative; width: 280px; font-size: 0.5em;">
-            <div style="text-align: center; color: #ffa657; font-weight: bold; font-size: 1.1em; margin-bottom: 0.5em;">Total Memory Over Time</div>
-            <!-- Stack of memory that's way too tall -->
-            <div style="display: flex; flex-direction: column; gap: 0.2em;">
-              <div style="background: rgba(126,231,135,0.1); padding: 0.3em 0.5em; border-radius: 4px; text-align: center;">
-                <span class="dim">Daily logs (weeks of notes)</span>
-              </div>
-              <div style="background: rgba(126,231,135,0.1); padding: 0.3em 0.5em; border-radius: 4px; text-align: center;">
-                <span class="dim">Topic files (projects, people)</span>
-              </div>
-              <div style="background: rgba(126,231,135,0.1); padding: 0.3em 0.5em; border-radius: 4px; text-align: center;">
-                <span class="dim">Channel context (per-channel history)</span>
-              </div>
-              <div style="background: rgba(126,231,135,0.1); padding: 0.3em 0.5em; border-radius: 4px; text-align: center;">
-                <span class="dim">Conversation archives</span>
-              </div>
-              <div style="background: rgba(126,231,135,0.1); padding: 0.3em 0.5em; border-radius: 4px; text-align: center;">
-                <span class="dim">Observations & reflections</span>
-              </div>
-              <div style="background: rgba(126,231,135,0.1); padding: 0.3em 0.5em; border-radius: 4px; text-align: center;">
-                <span class="dim">Preferences & contradictions</span>
-              </div>
-              <div style="background: rgba(255,166,87,0.15); padding: 0.3em 0.5em; border-radius: 4px; text-align: center; border: 1px dashed rgba(255,166,87,0.4);">
-                <span class="dim">...and it keeps growing</span>
-              </div>
-              <div style="background: rgba(248,81,73,0.1); padding: 0.3em 0.5em; border-radius: 4px; text-align: center; border: 1px solid rgba(248,81,73,0.3);">
-                <span class="red">📈 Way more than any context window can hold</span>
-              </div>
+          <!-- Everything you want to remember - overflowing -->
+          <div style="width: 320px; font-size: 0.48em;">
+            <div style="text-align: center; color: #ffa657; font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">Everything you want it to know</div>
+            <div style="border: 2px solid rgba(255,166,87,0.4); border-radius: 12px; overflow: visible; position: relative; height: 340px;">
+              <div style="background: rgba(126,231,135,0.08); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">Your preferences & personality</div>
+              <div style="background: rgba(126,231,135,0.08); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">Past conversations & decisions</div>
+              <div style="background: rgba(126,231,135,0.08); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">Project knowledge & notes</div>
+              <div style="background: rgba(126,231,135,0.08); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">People, relationships, context</div>
+              <div style="background: rgba(126,231,135,0.08); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">Lessons learned, mistakes to avoid</div>
+              <div style="background: rgba(126,231,135,0.08); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">Changing facts & evolving preferences</div>
+              <div style="background: rgba(126,231,135,0.08); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">Weeks and months of interaction</div>
+              <!-- Overflowing below the border -->
+              <div style="background: rgba(255,166,87,0.12); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">Calendar events, emails, tasks</div>
+              <div style="background: rgba(255,166,87,0.12); padding: 0.3em 0.5em; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.03);">Every correction you've ever made</div>
+              <div style="background: rgba(248,81,73,0.12); padding: 0.3em 0.5em; text-align: center; border-radius: 0 0 10px 10px;">📈 ...and it never stops growing</div>
             </div>
+            <div style="text-align: center; margin-top: 0.3em; color: #ffa657;">Unbounded. Always growing.</div>
           </div>
 
         </div>
 
-        <p style="font-size: 0.52em; margin-top: 0.5em; text-align: center;">
+        <p style="font-size: 0.52em; margin-top: 0.4em; text-align: center;">
           <span class="highlight">You can't load it all.</span>
           <span class="dim">You need a way to retrieve the right memories at the right time — and leave the rest on disk.</span>
         </p>
