@@ -293,7 +293,146 @@
         </p>
       </section>
 
-      <!-- SLIDE 7: What memory exists today -->
+      <!-- SLIDE 7: Memory Out — How is memory retrieved? -->
+      <section>
+        <h2>Memory Out: How Is It Retrieved?</h2>
+        <p class="subtitle">Two mechanisms — and one relies on the agent actually doing it</p>
+
+        <div style="display: flex; gap: 1em; margin-top: 0.6em; font-size: 0.52em; text-align: left; align-items: start;">
+
+          <!-- Auto-loaded -->
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.2);">
+            <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">✅ Auto-loaded every session</div>
+            <div class="dim" style="margin-bottom: 0.3em;">Injected into context before your first message:</div>
+            <div style="display: flex; flex-direction: column; gap: 0.15em;">
+              <div style="padding: 0.2em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">SOUL.md · AGENTS.md · USER.md</div>
+              <div style="padding: 0.2em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">MEMORY.md · TOOLS.md · IDENTITY.md</div>
+            </div>
+            <div class="dim" style="margin-top: 0.4em;">Always there. Costs tokens every turn. This is your baseline — but it's limited to what fits in those files.</div>
+          </div>
+
+          <!-- Tool-based retrieval -->
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.2);">
+            <div class="blue" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">🔍 On-demand: memory_search</div>
+            <div class="dim" style="margin-bottom: 0.3em;">Semantic vector search over all memory files. But the agent has to <em>choose</em> to call it.</div>
+            <div style="margin-top: 0.4em; padding: 0.5em; background: rgba(255,255,255,0.03); border-radius: 8px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em; color: #8b949e; line-height: 1.5;">
+              "Mandatory recall step: semantically search MEMORY.md + memory/*.md before answering questions about prior work, decisions, dates, people, preferences, or todos"
+            </div>
+            <div class="dim" style="margin-top: 0.4em;">↑ This is the actual system prompt instruction. The model is <em>told</em> to search — but it doesn't always listen.</div>
+          </div>
+
+        </div>
+
+        <p style="font-size: 0.48em; margin-top: 0.5em; text-align: center;">
+          <span class="orange">The gap:</span> <span class="dim">retrieval depends on the model's judgment call. Sometimes it searches proactively, sometimes as a fallback after failing, sometimes not at all.</span>
+        </p>
+      </section>
+
+      <!-- SLIDE 8: How memory_search works -->
+      <section>
+        <h2>Under The Hood: Semantic Search</h2>
+        <p class="subtitle">How memory_search actually finds relevant memories</p>
+
+        <div style="display: flex; gap: 0.8em; margin-top: 0.8em; font-size: 0.52em; text-align: left;">
+
+          <!-- Left: how it works -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5em;">
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06);">
+              <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">1. Embedding</div>
+              <div class="dim">Every chunk of your memory files gets converted into a vector (a list of numbers) that captures its meaning. Your query does too.</div>
+            </div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06);">
+              <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">2. Similarity search</div>
+              <div class="dim">Find the memory chunks whose vectors are closest to your query's vector. "Closest" = most semantically similar, even with different wording.</div>
+            </div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06);">
+              <div class="blue" style="font-weight: bold; margin-bottom: 0.2em;">3. Inject into context</div>
+              <div class="dim">The top results get pulled into the conversation as tool output. The model now has that memory available for this response.</div>
+            </div>
+          </div>
+
+          <!-- Right: defaults + caveats -->
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5em;">
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(126,231,135,0.06);">
+              <div class="green" style="font-weight: bold; margin-bottom: 0.2em;">OpenClaw defaults</div>
+              <div class="dim">
+                • Enabled by default (if you have an API key for embeddings)<br>
+                • Auto-selects provider: OpenAI → Gemini → Voyage → Mistral → local<br>
+                • Watches memory files — re-indexes on change<br>
+                • Also supports local/offline embeddings
+              </div>
+            </div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(255,166,87,0.06);">
+              <div class="orange" style="font-weight: bold; margin-bottom: 0.2em;">The limitations</div>
+              <div class="dim">
+                • Only finds what's been written to memory files<br>
+                • Quality depends on how memory is organized<br>
+                • Embedding quality varies by provider<br>
+                • It's a tool call — adds latency + tokens to each retrieval
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SLIDE 9: Memory In — How does memory get stored? -->
+      <section>
+        <h2>Memory In: How Does It Get Stored?</h2>
+        <p class="subtitle">This is the harder problem — and it's mostly manual today</p>
+
+        <div style="display: flex; gap: 1em; margin-top: 0.8em; font-size: 0.52em; text-align: left; align-items: start;">
+
+          <!-- Left: the default -->
+          <div style="flex: 1;">
+            <div style="padding: 0.7em; border-radius: 12px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.2);">
+              <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">🦞 OpenClaw defaults</div>
+              <div style="display: flex; flex-direction: column; gap: 0.4em;">
+                <div>
+                  <div style="font-weight: bold;">System prompt says "write it down"</div>
+                  <div class="dim">The agent is instructed to write decisions, preferences, and facts to memory files. But it's guidance, not enforcement.</div>
+                </div>
+                <div>
+                  <div style="font-weight: bold;">Memory flush before compaction</div>
+                  <div class="dim">When context is about to be compacted, OpenClaw runs a silent turn reminding the agent: "save durable notes to disk now." A safety net for long sessions.</div>
+                </div>
+                <div>
+                  <div style="font-weight: bold;">You can write memory yourself</div>
+                  <div class="dim">"Remember that I prefer Thai food" → agent writes to MEMORY.md or a daily file. Works when you remember to ask.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: the problems -->
+          <div style="flex: 1;">
+            <div style="padding: 0.7em; border-radius: 12px; background: rgba(248,81,73,0.06); border: 1px solid rgba(248,81,73,0.15);">
+              <div class="red" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">⚠️ The problems</div>
+              <div style="display: flex; flex-direction: column; gap: 0.4em;">
+                <div>
+                  <div style="font-weight: bold;">Agents don't reliably follow instructions</div>
+                  <div class="dim">The model might forget to write things down, especially when it's focused on a task. Important context slips through.</div>
+                </div>
+                <div>
+                  <div style="font-weight: bold;">What gets stored is inconsistent</div>
+                  <div class="dim">Sometimes it saves too much detail, sometimes not enough. No systematic process for deciding what matters.</div>
+                </div>
+                <div>
+                  <div style="font-weight: bold;">Storage structure is basic</div>
+                  <div class="dim">Markdown files in folders. No cross-referencing, no graph structure, no way to connect related facts across files. A decision about a project and a person's preference learned at the same time end up in different places.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <p style="font-size: 0.48em; margin-top: 0.5em; text-align: center;">
+          <span class="dim">The default is "hope the agent writes things down." We can do better.</span>
+        </p>
+      </section>
+
+      <!-- SLIDE 10: What memory exists today -->
       <section>
         <h2>What Exists Today</h2>
         <p class="subtitle">Current approaches and their limitations</p>
@@ -381,52 +520,6 @@
         </p>
       </section>
 
-      <!-- SLIDE: How memories are surfaced -->
-      <section>
-        <h2>How Memories Get Into Context</h2>
-        <p class="subtitle">Two mechanisms — automatic injection and on-demand retrieval</p>
-
-        <div style="display: flex; gap: 1em; margin-top: 0.8em; font-size: 0.52em; text-align: left; align-items: start;">
-
-          <!-- Left: auto-injected -->
-          <div style="flex: 1;">
-            <div style="border-radius: 12px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.2); padding: 0.7em;">
-              <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">📂 Loaded automatically every session</div>
-              <div class="dim" style="margin-bottom: 0.3em;">Injected into the system prompt before your first message:</div>
-              <div style="display: flex; flex-direction: column; gap: 0.2em;">
-                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">SOUL.md — personality</div>
-                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">AGENTS.md — instructions</div>
-                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">USER.md — who you are</div>
-                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">MEMORY.md — long-term memory</div>
-                <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 4px;">TOOLS.md, IDENTITY.md, HEARTBEAT.md</div>
-              </div>
-              <div class="dim" style="margin-top: 0.4em; font-size: 0.9em;">Always present. Costs tokens every turn. Keep these concise.</div>
-            </div>
-          </div>
-
-          <!-- Right: on-demand -->
-          <div style="flex: 1;">
-            <div style="border-radius: 12px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.2); padding: 0.7em;">
-              <div class="blue" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">🔍 Retrieved on demand (tool calls)</div>
-              <div class="dim" style="margin-bottom: 0.3em;">The model decides to search when it thinks it needs more context:</div>
-              <div style="display: flex; flex-direction: column; gap: 0.2em;">
-                <div style="padding: 0.25em 0.4em; background: rgba(88,166,255,0.08); border-radius: 4px;"><code>memory_search</code> — semantic vector search over all memory files</div>
-                <div style="padding: 0.25em 0.4em; background: rgba(88,166,255,0.08); border-radius: 4px;"><code>memory_get</code> — read specific file/line range</div>
-              </div>
-              <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">
-                The system prompt tells the model:<br>
-                <span style="font-style: italic; color: #8b949e;">"Before answering questions about prior work, decisions, dates, people, preferences, or todos — run memory_search first."</span>
-              </div>
-              <div class="dim" style="margin-top: 0.4em; font-size: 0.9em;">Only loaded when needed. Doesn't cost tokens until the model calls it.</div>
-            </div>
-          </div>
-
-        </div>
-
-        <p style="font-size: 0.48em; margin-top: 0.5em;">
-          <span class="highlight">Key insight:</span> <span class="dim">daily logs, topic files, and channel context are never auto-loaded — they're pulled in via semantic search when relevant. This keeps baseline token cost low while still having deep recall available.</span>
-        </p>
-      </section>
 
       <!-- SLIDE: Where does memory live? -->
       <section>
