@@ -64,74 +64,84 @@
 
           <!-- ChatGPT -->
           <div style="flex: 1; border-radius: 12px; background: rgba(255,255,255,0.03); overflow: hidden;">
-            <div style="background: rgba(255,255,255,0.05); padding: 0.4em 0.6em; font-weight: bold; text-align: center;">💬 ChatGPT</div>
-            <div style="padding: 0.6em;">
-              <div style="padding: 0.3em 0.5em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+            <div style="background: rgba(255,255,255,0.05); padding: 0.35em 0.6em; font-weight: bold; text-align: center;">💬 ChatGPT</div>
+            <div style="padding: 0.5em;">
+              <div style="padding: 0.25em 0.4em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.25em;">
                 <span class="dim">System prompt</span> <span class="orange" style="font-size: 0.85em;">(OpenAI's, hidden)</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+              <div style="padding: 0.25em 0.4em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.25em;">
                 <span class="dim">Memory bullets</span> <span class="orange" style="font-size: 0.85em;">(auto-generated)</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
+              <div style="padding: 0.25em 0.4em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.25em;">
+                <span class="dim">MCP tool definitions</span> <span class="orange" style="font-size: 0.85em;">(if configured)</span>
+              </div>
+              <div style="padding: 0.25em 0.4em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
                 <span class="dim">Your message →</span>
               </div>
-              <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">You don't control the system prompt or what gets remembered.</div>
+              <div class="dim" style="margin-top: 0.4em; font-size: 0.85em;">You don't control the system prompt or what gets remembered.</div>
             </div>
           </div>
 
           <!-- Claude Code -->
           <div style="flex: 1; border-radius: 12px; background: rgba(255,255,255,0.03); overflow: hidden;">
-            <div style="background: rgba(255,255,255,0.05); padding: 0.4em 0.6em; font-weight: bold; text-align: center;">💻 Claude Code</div>
-            <div style="padding: 0.6em;">
-              <div style="padding: 0.3em 0.5em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+            <div style="background: rgba(255,255,255,0.05); padding: 0.35em 0.6em; font-weight: bold; text-align: center;">💻 Claude Code</div>
+            <div style="padding: 0.5em;">
+              <div style="padding: 0.25em 0.4em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.25em;">
                 <span class="dim">System prompt</span> <span class="orange" style="font-size: 0.85em;">(Anthropic's)</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(88,166,255,0.08); border-radius: 6px; margin-bottom: 0.3em;">
-                <span class="dim">CLAUDE.md</span> <span class="blue" style="font-size: 0.85em;">(you write this)</span>
+              <div style="padding: 0.25em 0.4em; background: rgba(88,166,255,0.08); border-radius: 6px; margin-bottom: 0.25em;">
+                <span class="dim">CLAUDE.md chain</span> <span class="blue" style="font-size: 0.85em;">(org → user → project + parent dirs)</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.3em;">
-                <span class="dim">Auto memory</span> <span class="orange" style="font-size: 0.85em;">(Claude writes this)</span>
+              <div style="padding: 0.25em 0.4em; background: rgba(88,166,255,0.08); border-radius: 6px; margin-bottom: 0.25em;">
+                <span class="dim">.claude/rules/</span> <span class="blue" style="font-size: 0.85em;">(unconditional rules)</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
+              <div style="padding: 0.25em 0.4em; background: rgba(88,166,255,0.08); border-radius: 6px; margin-bottom: 0.25em;">
+                <span class="dim">@imports</span> <span class="blue" style="font-size: 0.85em;">(files referenced in CLAUDE.md)</span>
+              </div>
+              <div style="padding: 0.25em 0.4em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.25em;">
+                <span class="dim">Auto memory</span> <span class="orange" style="font-size: 0.85em;">(Claude writes, 200 lines)</span>
+              </div>
+              <div style="padding: 0.25em 0.4em; background: rgba(255,166,87,0.08); border-radius: 6px; margin-bottom: 0.25em;">
+                <span class="dim">MCP tool definitions</span> <span class="orange" style="font-size: 0.85em;">(can be 80K+ tokens!)</span>
+              </div>
+              <div style="padding: 0.25em 0.4em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
                 <span class="dim">Your message →</span>
               </div>
-              <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">You control CLAUDE.md. Scoped to one repo. Code files discovered via tools.</div>
+              <div class="dim" style="margin-top: 0.4em; font-size: 0.85em;">Layered CLAUDE.md hierarchy. MCP tools can eat huge context.</div>
             </div>
           </div>
 
           <!-- OpenClaw -->
           <div style="flex: 1; border-radius: 12px; background: rgba(88,166,255,0.05); border: 1px solid rgba(88,166,255,0.2); overflow: hidden;">
-            <div style="background: rgba(88,166,255,0.1); padding: 0.4em 0.6em; font-weight: bold; text-align: center;">🦞 OpenClaw</div>
-            <div style="padding: 0.6em;">
-              <div style="padding: 0.3em 0.5em; background: rgba(88,166,255,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+            <div style="background: rgba(88,166,255,0.1); padding: 0.35em 0.6em; font-weight: bold; text-align: center;">🦞 OpenClaw</div>
+            <div style="padding: 0.5em;">
+              <div style="padding: 0.25em 0.4em; background: rgba(88,166,255,0.08); border-radius: 6px; margin-bottom: 0.25em;">
                 <span class="dim">System prompt</span> <span class="blue" style="font-size: 0.85em;">(OpenClaw's + yours)</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+              <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.25em;">
                 <span class="green">SOUL.md</span> <span class="dim" style="font-size: 0.85em;">personality</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
+              <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.25em;">
                 <span class="green">AGENTS.md</span> <span class="dim" style="font-size: 0.85em;">instructions</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
-                <span class="green">USER.md</span> <span class="dim" style="font-size: 0.85em;">who you are</span>
+              <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.25em;">
+                <span class="green">USER.md · MEMORY.md · TOOLS.md</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
-                <span class="green">MEMORY.md</span> <span class="dim" style="font-size: 0.85em;">long-term memory</span>
+              <div style="padding: 0.25em 0.4em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.25em;">
+                <span class="green">Skills list</span> <span class="dim" style="font-size: 0.85em;">(compact index, details loaded on use)</span>
               </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(126,231,135,0.08); border-radius: 6px; margin-bottom: 0.3em;">
-                <span class="green">TOOLS.md + IDENTITY.md</span>
-              </div>
-              <div style="padding: 0.3em 0.5em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
+              <div style="padding: 0.25em 0.4em; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1);">
                 <span class="dim">Your message →</span>
               </div>
-              <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">You write all of these. Loaded every session.</div>
+              <div class="dim" style="margin-top: 0.4em; font-size: 0.85em;">You write all workspace files. Skills inject a compact index, not full definitions.</div>
             </div>
           </div>
 
         </div>
 
-        <p class="dim" style="font-size: 0.48em; margin-top: 0.6em;">
-          Same model underneath. The starting context is what makes the experience different.
+        <p class="dim" style="font-size: 0.45em; margin-top: 0.5em;">
+          Same model underneath. The starting context is what makes the experience different.<br>
+          MCP servers (ChatGPT, Claude Code) and Skills (OpenClaw) extend what the agent can do — but consume context differently.
         </p>
       </section>
 
