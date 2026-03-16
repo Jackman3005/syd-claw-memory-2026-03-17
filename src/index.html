@@ -234,7 +234,45 @@
         </p>
       </section>
 
-      <!-- SLIDE 6: Memory ≠ Context -->
+      <!-- SLIDE: Improving Compaction — LCM -->
+      <section>
+        <h2>Improving Compaction</h2>
+        <p class="subtitle">One example: Lossless Context Management (LCM)</p>
+
+        <div style="display: flex; gap: 1em; margin-top: 0.8em; font-size: 0.55em; text-align: left; align-items: start;">
+
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.2);">
+            <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">🌳 What LCM does</div>
+            <ul style="margin: 0; padding-left: 1.2em;">
+              <li class="dim">Replaces OpenClaw's default compaction with a <strong>DAG-based summarization system</strong></li>
+              <li class="dim">Every original message is kept in a SQLite database — nothing is ever lost</li>
+              <li class="dim">Older messages get summarized into a tree of summaries</li>
+              <li class="dim">Gives the agent tools to <strong>drill back into any summary</strong> and recover the full original detail</li>
+              <li class="dim">Feels like talking to an agent that never forgets within a conversation</li>
+            </ul>
+          </div>
+
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.15);">
+            <div class="orange" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">⚠️ What it doesn't do</div>
+            <ul style="margin: 0; padding-left: 1.2em;">
+              <li class="dim">It's <strong>per-session only</strong> — start a new conversation and you're back to zero</li>
+              <li class="dim">It doesn't build long-term memory across sessions</li>
+              <li class="dim">It solves "I forgot what we talked about 2 hours ago" — not "I forgot what we talked about last week"</li>
+            </ul>
+            <div class="dim" style="margin-top: 0.5em; font-size: 0.9em;">
+              <a href="https://github.com/Martian-Engineering/lossless-claw" target="_blank" style="color: #58a6ff; text-decoration: none;">github.com/Martian-Engineering/lossless-claw</a>
+            </div>
+          </div>
+
+        </div>
+
+        <p style="font-size: 0.5em; margin-top: 0.6em; text-align: center;">
+          <span class="dim">LCM is one approach to improving within-session compaction — there are others being explored too.</span><br>
+          <span class="highlight">But compaction is a different problem from memory.</span> <span class="dim">Let's talk about that next.</span>
+        </p>
+      </section>
+
+      <!-- SLIDE: Memory ≠ Context -->
       <section>
         <h2>Memory Is A Different Problem</h2>
         <p class="subtitle">You can't just dump everything into context — it won't fit</p>
