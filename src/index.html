@@ -187,9 +187,7 @@
               </ul>
             </div>
 
-            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
-              <div class="dim" style="font-size: 0.9em;">Let's look at how different platforms actually handle this →</div>
-            </div>
+
           </div>
 
         </div>
@@ -201,27 +199,39 @@
         <h2>When Context Gets Full: Compacting</h2>
         <p class="subtitle">Every platform handles this differently — and most don't tell you how</p>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6em; margin-top: 0.8em; font-size: 0.55em; text-align: left;">
+        <div style="display: flex; gap: 1em; margin-top: 0.8em; font-size: 0.55em; text-align: left; align-items: start;">
 
-          <div style="padding: 0.6em; border-radius: 10px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.15);">
-            <div class="orange" style="font-weight: bold; margin-bottom: 0.3em;">💬 ChatGPT</div>
-            <div class="dim">Proprietary. OpenAI doesn't publish how it works. In long conversations, earlier details can fade — but it's unclear whether it's summarizing, truncating, or doing something else entirely.</div>
+          <!-- Left: proprietary platforms -->
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.15);">
+            <div class="orange" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">💬 ChatGPT, Claude, Gemini, etc.</div>
+            <div class="dim" style="margin-bottom: 0.4em;">These platforms handle compacting for you — but you have no control over how.</div>
+            <ul style="margin: 0; padding-left: 1.2em;">
+              <li class="dim">Proprietary algorithms — not published</li>
+              <li class="dim">Generally summarize or drop older messages</li>
+              <li class="dim">Claude mentions "organizing its thoughts" on paid plans</li>
+              <li class="dim">You can't configure when, how, or what gets kept</li>
+              <li class="dim">It just happens — you trust the platform</li>
+            </ul>
           </div>
 
-          <div style="padding: 0.6em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
-            <div class="blue" style="font-weight: bold; margin-bottom: 0.3em;">🔵 Claude (web & desktop)</div>
-            <div class="dim">Automatic context management on paid plans — summarizes earlier messages, preserves full history. "Conversations continue indefinitely." You may see Claude "organizing its thoughts."</div>
-          </div>
-
-          <div style="padding: 0.6em; border-radius: 10px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.15);">
-            <div class="green" style="font-weight: bold; margin-bottom: 0.3em;">🦞 OpenClaw</div>
-            <div class="dim">Summarizes older conversation, keeps recent messages intact. Before compacting, runs a <strong>memory flush</strong> — reminds the agent to save important notes to disk first. Configurable: custom model, manual trigger with <code>/compact</code>.</div>
+          <!-- Right: OpenClaw -->
+          <div style="flex: 1; padding: 0.7em; border-radius: 12px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.2);">
+            <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">🦞 OpenClaw — you have a choice</div>
+            <div class="dim" style="margin-bottom: 0.4em;">Transparent and configurable:</div>
+            <ul style="margin: 0; padding-left: 1.2em;">
+              <li class="dim">Summarizes older messages, keeps recent ones intact</li>
+              <li class="dim"><strong>Memory flush</strong> before compacting — agent saves important notes to disk first</li>
+              <li class="dim">Choose which model does the summarization</li>
+              <li class="dim">Manually trigger with <code>/compact</code> when you want</li>
+              <li class="dim">Plugins can replace the entire compaction engine</li>
+              <li class="dim">Session history persisted as JSONL — inspectable</li>
+            </ul>
           </div>
 
         </div>
 
         <p style="font-size: 0.5em; margin-top: 0.6em;">
-          <span class="highlight">The key problem:</span> <span class="dim">compacting is lossy — details get summarized away. And ALL of this is per-session. Start a new conversation and none of it carries over.</span>
+          <span class="highlight">Either way, compacting is lossy</span> <span class="dim">— details get summarized away. And all of this is per-session. Start a new conversation and none of it carries over.</span>
         </p>
       </section>
 
