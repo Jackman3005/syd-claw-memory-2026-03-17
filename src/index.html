@@ -446,9 +446,9 @@
             <ul style="margin: 0; padding-left: 1.2em;">
               <li class="dim">Enabled by default if you have an embedding API key</li>
               <li class="dim">Auto-selects provider: OpenAI → Gemini → Voyage → Mistral → local</li>
-              <li class="dim">Watches memory files — automatically re-indexes on change</li>
+              <li class="dim">Indexes <code>MEMORY.md</code> (already in context) <strong>+</strong> everything in <code>memory/</code> folder (daily logs, topic files, etc. — only accessible via search)</li>
+              <li class="dim">Watches files — automatically re-indexes on change</li>
               <li class="dim">Supports fully local/offline embeddings too</li>
-              <li class="dim">Both <code>memory_search</code> and <code>memory_get</code> are tool calls — the model uses them like any other tool</li>
             </ul>
           </div>
 
