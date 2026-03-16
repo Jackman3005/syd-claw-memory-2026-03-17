@@ -187,8 +187,8 @@
               </ul>
             </div>
 
-            <div style="padding: 0.5em; border-radius: 10px; background: rgba(248,81,73,0.06); border: 1px solid rgba(248,81,73,0.15);">
-              <div class="red" style="font-size: 0.9em;">Spoiler: most platforms just quietly drop your older messages and hope you don't notice. 🙃</div>
+            <div style="padding: 0.5em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
+              <div class="dim" style="font-size: 0.9em;">Let's look at how different platforms actually handle this →</div>
             </div>
           </div>
 
@@ -201,32 +201,27 @@
         <h2>When Context Gets Full: Compacting</h2>
         <p class="subtitle">Every platform handles this differently — and most don't tell you how</p>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em; margin-top: 0.8em; font-size: 0.55em; text-align: left;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6em; margin-top: 0.8em; font-size: 0.55em; text-align: left;">
 
           <div style="padding: 0.6em; border-radius: 10px; background: rgba(255,166,87,0.06); border: 1px solid rgba(255,166,87,0.15);">
             <div class="orange" style="font-weight: bold; margin-bottom: 0.3em;">💬 ChatGPT</div>
-            <div class="dim">Proprietary. Likely drops oldest messages when the window fills. OpenAI doesn't publish the algorithm. You just notice it "forgetting" things from earlier.</div>
+            <div class="dim">Proprietary. OpenAI doesn't publish how it works. In long conversations, earlier details can fade — but it's unclear whether it's summarizing, truncating, or doing something else entirely.</div>
           </div>
 
           <div style="padding: 0.6em; border-radius: 10px; background: rgba(88,166,255,0.06); border: 1px solid rgba(88,166,255,0.15);">
-            <div class="blue" style="font-weight: bold; margin-bottom: 0.3em;">🔵 Claude.ai (web)</div>
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.3em;">🔵 Claude (web & desktop)</div>
             <div class="dim">Automatic context management on paid plans — summarizes earlier messages, preserves full history. "Conversations continue indefinitely." You may see Claude "organizing its thoughts."</div>
           </div>
 
           <div style="padding: 0.6em; border-radius: 10px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.15);">
-            <div class="green" style="font-weight: bold; margin-bottom: 0.3em;">🦞 OpenClaw (default)</div>
+            <div class="green" style="font-weight: bold; margin-bottom: 0.3em;">🦞 OpenClaw</div>
             <div class="dim">Summarizes older conversation, keeps recent messages intact. Before compacting, runs a <strong>memory flush</strong> — reminds the agent to save important notes to disk first. Configurable: custom model, manual trigger with <code>/compact</code>.</div>
-          </div>
-
-          <div style="padding: 0.6em; border-radius: 10px; background: rgba(126,231,135,0.06); border: 1px solid rgba(126,231,135,0.15);">
-            <div class="green" style="font-weight: bold; margin-bottom: 0.3em;">🌳 LCM Plugin (Lossless Claw)</div>
-            <div class="dim">Replaces OpenClaw's default. Summarizes into a DAG — but <strong>keeps every original message in SQLite</strong>. Agent can drill back into any summary. Nothing is ever lost. Per-session only.</div>
           </div>
 
         </div>
 
         <p style="font-size: 0.5em; margin-top: 0.6em;">
-          <span class="highlight">The key problem:</span> <span class="dim">compacting is lossy by default. Details disappear. And ALL of this is per-session — start a new conversation and none of it carries over.</span>
+          <span class="highlight">The key problem:</span> <span class="dim">compacting is lossy — details get summarized away. And ALL of this is per-session. Start a new conversation and none of it carries over.</span>
         </p>
       </section>
 
