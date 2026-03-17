@@ -45,7 +45,7 @@
             <ul>
               <li>Switch platforms and your memory is gone</li>
               <li>Long sessions still hit context limits</li>
-              <li>Nobody automatically learns from patterns</li>
+              <li>Very few systems automatically learn from patterns over time</li>
               <li>Memories lack weight — a stern correction and a casual joke are stored the same way</li>
             </ul>
             <p class="dim" style="font-size: 0.85em; margin-top: 0.5em;">We want it to feel like a colleague — not a temp with notes.</p>
@@ -230,7 +230,7 @@
         </div>
 
         <p style="font-size: 0.5em; margin-top: 0.6em;">
-          <span class="highlight">Either way, compacting is lossy</span> <span class="dim">— details get summarized away. And all of this is per-session. Start a new conversation and none of it carries over.</span>
+          <span class="highlight">By default, compacting is lossy</span> <span class="dim">— details get summarized away. And all of this is per-session. Start a new conversation and none of it carries over.</span>
         </p>
       </section>
 
@@ -445,7 +445,7 @@
             <div class="green" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.4em;">✅ OpenClaw defaults</div>
             <ul style="margin: 0; padding-left: 1.2em;">
               <li class="dim">Enabled by default if you have an embedding API key</li>
-              <li class="dim">Auto-selects provider: OpenAI → Gemini → Voyage → Mistral → local</li>
+              <li class="dim">Auto-selects provider: local (if configured) → OpenAI → Gemini → Voyage → Mistral</li>
               <li class="dim">Indexes <code>MEMORY.md</code> (already in context) <strong>+</strong> everything in <code>memory/</code> folder (daily logs, topic files, etc. — only accessible via search)</li>
               <li class="dim">Watches files — automatically re-indexes on change</li>
               <li class="dim">Supports fully local/offline embeddings too</li>
@@ -548,8 +548,8 @@
             <div style="font-size: 1.5em; margin-bottom: 0.2em;">🌙</div>
             <div class="blue" style="font-weight: bold; font-size: 1.1em; margin-bottom: 0.3em;">During sleep</div>
             <div style="text-align: left;">
-              <div style="margin-bottom: 0.3em;">Your brain <strong>replays</strong> the day's events, compressed and reorganized.</div>
-              <div style="margin-bottom: 0.3em;" class="dim">Important memories move from temporary (hippocampus) to long-term (neocortex).</div>
+              <div style="margin-bottom: 0.3em;"><strong>Deep sleep:</strong> brain replays the day's events — transferring from temporary to long-term storage.</div>
+              <div style="margin-bottom: 0.3em;"><strong>REM sleep:</strong> reorganizes and finds connections — emotional processing, creative links.</div>
               <div class="dim">Memories <strong>transform</strong> — "dinner at that Thai place Tuesday" becomes "I enjoy Thai food with Aom."</div>
             </div>
           </div>
@@ -745,7 +745,52 @@
         </p>
       </section>
 
-      <!-- SLIDE 12: Q&A -->
+      <!-- SLIDE: References -->
+      <section>
+        <h2>References & Further Reading</h2>
+        <div style="font-size: 0.5em; text-align: left; max-width: 900px; margin: 0.8em auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8em;">
+          <div>
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.4em;">Neuroscience</div>
+            <div style="margin-bottom: 0.3em;">
+              <div class="dim">Memory consolidation during sleep</div>
+              <a href="https://journals.physiology.org/doi/full/10.1152/physrev.00054.2024" target="_blank" style="color: #58a6ff; text-decoration: none; font-size: 0.9em;">Physiological Reviews (2025)</a>
+            </div>
+            <div style="margin-bottom: 0.3em;">
+              <div class="dim">REM sleep recalibrates neural activity</div>
+              <a href="https://www.science.org/doi/10.1126/sciadv.adj1895" target="_blank" style="color: #58a6ff; text-decoration: none; font-size: 0.9em;">Science Advances (2024)</a>
+            </div>
+            <div style="margin-bottom: 0.3em;">
+              <div class="dim">AI memory-forming similar to hippocampus</div>
+              <a href="https://www.sciencedaily.com/releases/2023/12/231218130031.htm" target="_blank" style="color: #58a6ff; text-decoration: none; font-size: 0.9em;">ScienceDaily (2023)</a>
+            </div>
+          </div>
+          <div>
+            <div class="blue" style="font-weight: bold; margin-bottom: 0.4em;">AI Memory Systems</div>
+            <div style="margin-bottom: 0.3em;">
+              <div class="dim">Generative Agents (memory streams + reflection)</div>
+              <a href="https://arxiv.org/abs/2304.03442" target="_blank" style="color: #58a6ff; text-decoration: none; font-size: 0.9em;">Park et al. — Stanford (2023)</a>
+            </div>
+            <div style="margin-bottom: 0.3em;">
+              <div class="dim">Memory in the Age of AI Agents (survey)</div>
+              <a href="https://arxiv.org/abs/2512.13564" target="_blank" style="color: #58a6ff; text-decoration: none; font-size: 0.9em;">arxiv (Dec 2025)</a>
+            </div>
+            <div style="margin-bottom: 0.3em;">
+              <div class="dim">Letta / MemGPT — sleep-time consolidation</div>
+              <a href="https://www.letta.com/blog/sleep-time-compute" target="_blank" style="color: #58a6ff; text-decoration: none; font-size: 0.9em;">letta.com</a>
+            </div>
+            <div style="margin-bottom: 0.3em;">
+              <div class="dim">Total Recall — observational memory for OpenClaw</div>
+              <a href="https://github.com/gavdalf/total-recall" target="_blank" style="color: #58a6ff; text-decoration: none; font-size: 0.9em;">github.com/gavdalf/total-recall</a>
+            </div>
+            <div style="margin-bottom: 0.3em;">
+              <div class="dim">LCM — Lossless Context Management</div>
+              <a href="https://github.com/Martian-Engineering/lossless-claw" target="_blank" style="color: #58a6ff; text-decoration: none; font-size: 0.9em;">github.com/Martian-Engineering/lossless-claw</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE: Q&A -->
       <section>
         <h1 class="emoji-big">🧠</h1>
         <h2>Questions?</h2>
